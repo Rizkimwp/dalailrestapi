@@ -4,11 +4,11 @@ const pool = mysql.createPool(config);
 
 pool.on ('error', (err)=>{
     console.error(err);
-})
+});
 
 module.exports = {
 // get semua data doa 
-getDataDoa (res,req) {
+getDataDoa (req, res) {
     pool.getConnection(function(err, connection){
             if (err) throw err;
             connection.query(
@@ -30,7 +30,7 @@ getDataDoa (res,req) {
 },
 
 // ambil data berdasarkan id
-getDataDoaById(res, req) {
+getDataDoaById(req, res){
     let id = req.params.id; 
     pool.getConnection(function(err, connection) {
         if (err) throw err; 
@@ -56,7 +56,7 @@ getDataDoaById(res, req) {
 },
 
 // Tambah data
-addDataDoa(res, req) {
+addDataDoa(req, res) {
     let data = {
         doa_nama : req.body.nama,
         doa_ar : req.body.ar,
@@ -71,7 +71,7 @@ addDataDoa(res, req) {
             INSERT INTO doa_list SET ?;
             ` 
             , [data]
-            ,function(error, results){
+            , function(error, results){
                 if (error) throw error;
                 res.send ({
                     sucses : true, 
@@ -87,7 +87,7 @@ addDataDoa(res, req) {
 },
 
 // Update data
-updateDataDoa(res, req) {
+updateDataDoa(req, res) {
         let dataEdit = {
             doa_nama : req.body.nama,
             doa_ar : req.body.ar,
@@ -118,7 +118,7 @@ updateDataDoa(res, req) {
         })
 },
 
-deleteDataDoa(res, req) {
+deleteDataDoa(req, res) {
     let id = req.body.id 
     pool.getConnection(function(err,connection) {
         if(err) throw err;
